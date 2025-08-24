@@ -58,3 +58,22 @@ class DB:
             airline.append(item[0])
             frequency.append(item[1])
         return airline,frequency   #  frequency means count values in  my database
+
+    def  busy_airport(self):
+        city=[]
+        frequency=[]
+        self.cursor.execute("""
+        SELECT Source,COUNT(*)  FROM (SELECT Source FROM flights
+                               UNION ALL
+							   select Destination FROM flights) t
+        GROUP BY T.Source
+        ORDER BY  COUNT(*) DESC
+        """)
+
+        data=self.cursor.fetchall()
+
+        for item in data:
+            city.append(item[0])
+            frequency.append(item[1])
+
+        return city,frequency

@@ -36,6 +36,21 @@ elif user_option =="Analytics":
     st.header("Pie chart")
     st.plotly_chart(fig)
 
+    city, frequency = db.busy_airport()
+    # Bar chart
+    bar_fig = go.Figure(
+        data=[go.Bar(
+            x=city,
+            y=frequency,
+            text=frequency,
+            textposition="auto"
+        )]
+    )
+
+    st.header("Busiest Airports (Bar Chart)")
+    st.plotly_chart(bar_fig)
+
+
 else:
     st.title("Tell about the  Project")
 
