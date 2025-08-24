@@ -44,3 +44,17 @@ class DB:
         data=self.cursor.fetchall()
 
         return data
+
+    def fetch_airlines_frequency(self):
+        airline=[]
+        frequency=[]
+        self.cursor.execute("""
+        SELECT  airline ,count(*)  FROM flights GROUP BY airline
+        """)
+
+        data=self.cursor.fetchall()
+
+        for item in  data:
+            airline.append(item[0])
+            frequency.append(item[1])
+        return airline,frequency   #  frequency means count values in  my database

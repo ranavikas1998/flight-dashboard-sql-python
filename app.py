@@ -1,5 +1,6 @@
 import streamlit as st
 from dbhelper import DB
+import plotly.graph_objects as go
 
 db=DB()
 
@@ -23,7 +24,18 @@ if user_option =="Check Flights":
         st.dataframe(results)
 
 elif user_option =="Analytics":
-    st.title("Analytics")
+    airline,frequency=db.fetch_airlines_frequency()
+    fig=go.Figure(
+        go.Pie(
+            labels=airline,
+            values=frequency,
+            hoverinfo="label+percent",
+            textinfo="value"
+        ))
+
+    st.header("Pie chart")
+    st.plotly_chart(fig)
+
 else:
     st.title("Tell about the  Project")
 
