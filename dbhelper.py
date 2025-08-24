@@ -9,7 +9,7 @@ class DB:
             self.conn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};'
                 'SERVER=DESKTOP-A4VIG2K\\SQLEXPRESS;'
-                'DATABASE=indigo;'
+                'DATABASE=flights;'
                 'Trusted_Connection=yes;',  # if using Windows Authentication
                 autocommit=True  # with out autocommit it can not create
             )
@@ -35,3 +35,12 @@ class DB:
             city.append(item[0])
 
         return city
+
+    def fetch_all_flights(self,source,destination):
+        self.cursor.execute("""
+        SELECT  Airline,Route,Dep_Time,Duration FROM  flights WHERE  source ='{}' AND  destination='{}'
+        """.format(source,destination))  #  passing the string  value through  the  format function
+
+        data=self.cursor.fetchall()
+
+        return data
