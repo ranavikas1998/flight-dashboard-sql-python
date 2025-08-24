@@ -77,3 +77,22 @@ class DB:
             frequency.append(item[1])
 
         return city,frequency
+
+    def daily_frequency(self):
+        date = []
+        frequency = []
+        self.cursor.execute("""
+                            SELECT Date_of_Journey, COUNT(*)
+                            FROM flights
+                            GROUP BY Date_of_Journey
+                            """)
+
+        data = self.cursor.fetchall()
+
+        for item in data:
+            date.append(item[0])
+            frequency.append(item[1])
+
+        return date, frequency
+
+

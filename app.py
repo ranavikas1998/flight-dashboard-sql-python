@@ -36,7 +36,7 @@ elif user_option =="Analytics":
     st.header("Pie chart")
     st.plotly_chart(fig)
 
-    city, frequency = db.busy_airport()
+    city, frequency1 = db.busy_airport()
     # Bar chart
     bar_fig = go.Figure(
         data=[go.Bar(
@@ -46,10 +46,22 @@ elif user_option =="Analytics":
             textposition="auto"
         )]
     )
-
     st.header("Busiest Airports (Bar Chart)")
     st.plotly_chart(bar_fig)
 
+    date, frequency = db.daily_frequency()
+    # line chart
+    lin_fig = go.Figure(
+        data=[go.Scatter(
+            x=date,
+            y=frequency,
+            mode="lines",  # line chart
+            line=dict(color="blue", width=2)
+        )]
+    )
+
+    st.header("Daily number of flights (Line Chart filtered by airlines)")
+    st.plotly_chart(lin_fig)
 
 else:
     st.title("Tell about the  Project")
